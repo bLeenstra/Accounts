@@ -59,5 +59,14 @@ namespace CashFlowManager.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error connecting to the Database. More details can be found in the error log.
+        /// </summary>
+        internal static string MysqlConnectionFailure {
+            get {
+                return ResourceManager.GetString("MysqlConnectionFailure", resourceCulture);
+            }
+        }
     }
 }

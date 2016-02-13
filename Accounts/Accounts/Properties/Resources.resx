@@ -114,4 +114,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MysqlConnectionFailure" xml:space="preserve">
+    <value>There was an error connecting to the Database. More details can be found in the error log</value>
+  </data>
 </root>
