@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Accounts.Forms;
-using Accounts.Forms.Summary;
+using CashFlowManager.Forms.Summary;
 
-namespace Accounts {
+namespace CashFlowManager {
     static class Program {
         /// <summary>
         /// The main entry point for the application.

@@ -1,4 +1,4 @@
-﻿namespace Accounts.Forms.Summary {
+﻿namespace CashFlowManager.Forms.Summary {
     partial class NetWorth {
         /// <summary>
         /// Required designer variable.
