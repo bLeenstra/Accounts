@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,16 +47,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\ChartOfAccounts.cs">
+    <Compile Include="Class\Asset.cs" />
+    <Compile Include="Class\BankAccount.cs" />
+    <Compile Include="Class\Cash.cs" />
+    <Compile Include="Class\CreditCard.cs" />
+    <Compile Include="Class\Expense.cs" />
+    <Compile Include="Class\Income.cs" />
+    <Compile Include="Class\Interest.cs" />
+    <Compile Include="Class\Liability.cs" />
+    <Compile Include="Class\Property.cs" />
+    <Compile Include="Class\Shares.cs" />
+    <Compile Include="Forms\MainScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ChartOfAccounts.Designer.cs">
-      <DependentUpon>ChartOfAccounts.cs</DependentUpon>
+    <Compile Include="Forms\MainScreen.Designer.cs">
+      <DependentUpon>MainScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Summary_NetWorth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\.Designer.cs">
+      <DependentUpon>Summary_NetWorth.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\ChartOfAccounts.resx">
-      <DependentUpon>ChartOfAccounts.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MainScreen.resx">
+      <DependentUpon>MainScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Summary_NetWorth.resx">
+      <DependentUpon>Summary_NetWorth.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
