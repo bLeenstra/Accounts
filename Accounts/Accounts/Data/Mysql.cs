@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System;
+using MySql.Data.MySqlClient;
 
 namespace CashFlowManager.Data {
     class Mysql : Database
@@ -16,12 +17,13 @@ namespace CashFlowManager.Data {
 
         }
 
-        private MySqlConnection GetConnection()
+        private MySqlConnection GetConnection(DatabaseNames database)
         {
-            MySqlConnectionStringBuilder conn_string = new MySqlConnectionStringBuilder();
-            conn_string.Server = base.DataSource;
-            //conn_string.Database
-            MySqlConnection conn = new MySqlConnection(conn_string.ConnectionString);
+            MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder();
+            connString.Server = base.DataSource;
+            //connString.Database = Helpers.EnumHelper.EnumName(database);
+
+            MySqlConnection conn = new MySqlConnection(connString.ConnectionString);
             return conn;
         }
     }
