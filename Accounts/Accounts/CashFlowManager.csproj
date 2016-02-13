@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -57,17 +58,20 @@
     <Compile Include="Class\Liability.cs" />
     <Compile Include="Class\Property.cs" />
     <Compile Include="Class\Shares.cs" />
+    <Compile Include="Configuration\ConfigFile.cs" />
+    <Compile Include="Data\Database.cs" />
+    <Compile Include="Data\Mysql.cs" />
     <Compile Include="Forms\MainScreen.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainScreen.Designer.cs">
       <DependentUpon>MainScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Summary_NetWorth.cs">
+    <Compile Include="Forms\Summary\NetWorth.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\.Designer.cs">
-      <DependentUpon>Summary_NetWorth.cs</DependentUpon>
+    <Compile Include="Forms\Summary\.Designer.cs">
+      <DependentUpon>NetWorth.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -75,8 +79,8 @@
     <EmbeddedResource Include="Forms\MainScreen.resx">
       <DependentUpon>MainScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Summary_NetWorth.resx">
-      <DependentUpon>Summary_NetWorth.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Summary\NetWorth.resx">
+      <DependentUpon>NetWorth.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Accounts.Forms;
+using Accounts.Forms.Summary;
 
 namespace Accounts {
     static class Program {
@@ -14,7 +15,7 @@ namespace Accounts {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ChartOfAccounts());
+            Application.Run(new NetWorth());
         }
     }
 }

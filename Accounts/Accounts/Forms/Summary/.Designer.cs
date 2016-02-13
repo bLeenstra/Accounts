@@ -1,5 +1,5 @@
-﻿namespace Accounts.Forms {
-    partial class ChartOfAccounts {
+﻿namespace Accounts.Forms.Summary {
+    partial class NetWorth {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -27,6 +27,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -66,16 +68,38 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Total Worth:";
             // 
-            // ChartOfAccounts
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(170, 185);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(137, 52);
+            this.btnRefresh.TabIndex = 8;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(313, 185);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(137, 52);
+            this.btnExit.TabIndex = 9;
+            this.btnExit.Text = "Exit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // NetWorth
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(373, 160);
+            this.ClientSize = new System.Drawing.Size(462, 249);
+            this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "ChartOfAccounts";
+            this.Name = "NetWorth";
             this.Text = "Net Worth";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -88,6 +112,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Button btnExit;
     }
 }
 
