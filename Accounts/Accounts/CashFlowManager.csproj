@@ -66,6 +66,7 @@
     <Compile Include="Configuration\ErrorLog.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\Mysql.cs" />
+    <Compile Include="Data\tmp.cs" />
     <Compile Include="Forms\MainScreen.cs">
       <SubType>Form</SubType>
     </Compile>
