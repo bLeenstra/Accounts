@@ -2,9 +2,12 @@
 using System.Windows.Forms;
 using CashFlowManager.Forms.Summary;
 
-namespace CashFlowManager.Forms.Main {
-    public partial class MainScreen : Form {
-        public MainScreen() {
+namespace CashFlowManager.Forms.Main
+{
+    public partial class MainScreen : Form
+    {
+        public MainScreen()
+        {
             InitializeComponent();
         }
 
@@ -15,24 +18,25 @@ namespace CashFlowManager.Forms.Main {
                 config.ShowDialog();
                 if (config.DialogResult != DialogResult.OK)
                 {
-                    this.Close();
+                    Close();
                 }
             }
-
-
         }
 
-        private void btnViewNetWorth_Click(object sender, EventArgs e) {
-            Summary.NetWorth netWorth = new NetWorth();
+        private void btnViewNetWorth_Click(object sender, EventArgs e)
+        {
+            NetWorth netWorth = new NetWorth();
             netWorth.ShowDialog();
         }
 
-        private void MainScreen_Load(object sender, EventArgs e) {
+        private void MainScreen_Load(object sender, EventArgs e)
+        {
             ConnectToDatabase();
         }
 
-        private void btnQuit_Click(object sender, EventArgs e) {
-            this.Close();
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

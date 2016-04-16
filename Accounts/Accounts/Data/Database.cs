@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Windows.Forms;
 using CashFlowManager.Enums;
 using CashFlowManager.Exceptions;
 using CashFlowManager.Helpers;
@@ -10,16 +9,18 @@ namespace CashFlowManager.Data
 {
     public sealed class Database : IDisposable
     {
-        private readonly MySqlConnection _connection;
-        private readonly MySqlTransaction _transaction;
         private static string _address;
         private static uint _port;
         private static string _username;
         private static string _password;
+        private readonly MySqlConnection _connection;
+        private readonly MySqlTransaction _transaction;
 
-        public Database() {
+        public Database()
+        {
             //get connection
-            MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder {
+            MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder
+            {
                 Server = _address,
                 Port = _port,
                 UserID = _username,
@@ -32,9 +33,11 @@ namespace CashFlowManager.Data
             _transaction = _connection.BeginTransaction();
         }
 
-        public Database(DatabaseNames database) {
+        public Database(DatabaseNames database)
+        {
             //get connection
-            MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder {
+            MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder
+            {
                 Server = _address,
                 Database = database.Name(),
                 Port = _port,
@@ -48,26 +51,38 @@ namespace CashFlowManager.Data
             _transaction = _connection.BeginTransaction();
         }
 
+        public void Dispose()
+        {
+            // get rid of managed resources, call Dispose on member variables...
+            _transaction.Dispose();
+            _connection.Dispose();
+        }
+
         /// <summary>
-        /// Sets the Database connection values
+        ///     Sets the Database connection values
         /// </summary>
         /// <param name="address"></param>
         /// <param name="port"></param>
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        internal static bool SetDatabaseConnection(string address, uint port, string username, string password) {
-            MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder {
+        internal static bool SetDatabaseConnection(string address, uint port, string username, string password)
+        {
+            MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder
+            {
                 Server = address,
                 Port = port,
                 UserID = username,
                 Password = password
             };
-            using ( MySqlConnection conn = new MySqlConnection(connString.ConnectionString) ) {
-                try {
+            using (MySqlConnection conn = new MySqlConnection(connString.ConnectionString))
+            {
+                try
+                {
                     OpenConnection(conn);
                 }
-                catch (MySqlException) {
+                catch (MySqlException)
+                {
                     return false;
                 }
                 _address = address;
@@ -79,19 +94,23 @@ namespace CashFlowManager.Data
         }
 
         /// <summary>
-        /// Executes a query inside a MySqlTransaction object and returns the value in position [0,0]
+        ///     Executes a query inside a MySqlTransaction object and returns the value in position [0,0]
         /// </summary>
         /// <param name="query">The Query you wish to execute</param>
         /// <param name="parameters">The MySqlParameter you wish to attach to the query</param>
         /// <returns>The value in position [0,0]</returns>
-        internal T GetDataSingleResult<T>(string query, MySqlParameter[] parameters) {
+        internal T GetDataSingleResult<T>(string query, MySqlParameter[] parameters)
+        {
             MySqlConnection conn = CheckConnectionValid();
-            using ( MySqlCommand cmd = CreateCommand(conn, query, parameters) ) {
-                try {
+            using (MySqlCommand cmd = CreateCommand(conn, query, parameters))
+            {
+                try
+                {
                     object value = cmd.ExecuteScalar();
-                    return (T)Convert.ChangeType(value, typeof (T));
+                    return (T) Convert.ChangeType(value, typeof (T));
                 }
-                catch (MySqlException ex) {
+                catch (MySqlException ex)
+                {
                     TransactionRollback();
                     throw new MySqlQueryException("Encountered an error running the query", ex);
                 }
@@ -99,24 +118,29 @@ namespace CashFlowManager.Data
         }
 
         /// <summary>
-        /// Executes a query inside a MySqlTransaction object and returns a datatable of the results
+        ///     Executes a query inside a MySqlTransaction object and returns a datatable of the results
         /// </summary>
         /// <param name="query">The Query you wish to execute</param>
         /// <param name="parameters">The MySqlParameter you wish to attach to the query</param>
         /// <returns>A DataTable containing the results view</returns>
-        internal DataTable GetDataTable(string query, MySqlParameter[] parameters) {
+        internal DataTable GetDataTable(string query, MySqlParameter[] parameters)
+        {
             DataTable dt = new DataTable();
             MySqlConnection conn = CheckConnectionValid();
-            using ( MySqlCommand cmd = CreateCommand(conn, query, parameters) ) {
-                try {
-                    using ( MySqlDataReader dr = cmd.ExecuteReader() ) {
+            using (MySqlCommand cmd = CreateCommand(conn, query, parameters))
+            {
+                try
+                {
+                    using (MySqlDataReader dr = cmd.ExecuteReader())
+                    {
                         DataSet ds = new DataSet();
                         ds.Tables.Add(dt);
                         ds.EnforceConstraints = false;
                         dt.Load(dr);
                     }
                 }
-                catch (MySqlException ex) {
+                catch (MySqlException ex)
+                {
                     TransactionRollback();
                     throw new MySqlQueryException("Encountered an error running the query", ex);
                 }
@@ -124,38 +148,50 @@ namespace CashFlowManager.Data
             return dt;
         }
 
-        internal long SetDataReturnLastInsertId(string query, MySqlParameter[] parameters) {
-            using ( MySqlCommand cmd = SetData(query, parameters) ) {
-                try {
+        internal long SetDataReturnLastInsertId(string query, MySqlParameter[] parameters)
+        {
+            using (MySqlCommand cmd = SetData(query, parameters))
+            {
+                try
+                {
                     cmd.ExecuteNonQuery();
                     return cmd.LastInsertedId;
                 }
-                catch( MySqlException ex ) {
+                catch (MySqlException ex)
+                {
                     TransactionRollback();
                     throw new MySqlQueryException("Encountered an error running the query", ex);
                 }
             }
         }
 
-        internal int SetDataReturnRowCount(string query, MySqlParameter[] parameters) {
-            using ( MySqlCommand cmd = SetData(query, parameters) ) {
-                try {
+        internal int SetDataReturnRowCount(string query, MySqlParameter[] parameters)
+        {
+            using (MySqlCommand cmd = SetData(query, parameters))
+            {
+                try
+                {
                     int value = cmd.ExecuteNonQuery();
                     return value;
                 }
-                catch( MySqlException ex ) {
+                catch (MySqlException ex)
+                {
                     TransactionRollback();
                     throw new MySqlQueryException("Encountered an error running the query", ex);
                 }
             }
         }
 
-        internal void SetDataReturnNone(string query, MySqlParameter[] parameters) {
-            using( MySqlCommand cmd = SetData(query, parameters) ) {
-                try {
+        internal void SetDataReturnNone(string query, MySqlParameter[] parameters)
+        {
+            using (MySqlCommand cmd = SetData(query, parameters))
+            {
+                try
+                {
                     cmd.ExecuteNonQuery();
                 }
-                catch( MySqlException ex ) {
+                catch (MySqlException ex)
+                {
                     TransactionRollback();
                     throw new MySqlQueryException("Encountered an error running the query", ex);
                 }
@@ -163,44 +199,53 @@ namespace CashFlowManager.Data
         }
 
         /// <summary>
-        /// Executes a query inside a MySqlTransaction object and returns meta infomation about the query
+        ///     Executes a query inside a MySqlTransaction object and returns meta infomation about the query
         /// </summary>
         /// <param name="query">The Query you wish to execute</param>
         /// <param name="parameters">The MySqlParameter you wish to attach to the query</param>
         /// <returns>A long value containing info in relation to the returnInfo parameter</returns>
-        private MySqlCommand SetData(string query, MySqlParameter[] parameters) {
+        private MySqlCommand SetData(string query, MySqlParameter[] parameters)
+        {
             MySqlConnection conn = CheckConnectionValid();
             MySqlCommand cmd = CreateCommand(conn, query, parameters);
             return cmd;
         }
 
         /// <summary>
-        /// Commits the contents of the MySqlTransaction Object to the database.
+        ///     Commits the contents of the MySqlTransaction Object to the database.
         /// </summary>
-        internal void TransactionCommit() {
-            try {
+        internal void TransactionCommit()
+        {
+            try
+            {
                 _transaction.Commit();
             }
-            catch (MySqlException) {
+            catch (MySqlException)
+            {
                 _transaction.Rollback();
             }
         }
 
-        private void TransactionRollback() {
+        private void TransactionRollback()
+        {
             _transaction.Rollback();
         }
 
-        private MySqlConnection CheckConnectionValid() {
+        private MySqlConnection CheckConnectionValid()
+        {
             MySqlConnection conn = _transaction.Connection;
-            if ( conn.State != ConnectionState.Closed ) {
+            if (conn.State != ConnectionState.Closed)
+            {
                 return conn;
             }
             OpenConnection(conn);
             return conn;
         }
 
-        private MySqlCommand CreateCommand(MySqlConnection conn, string query, MySqlParameter[] parameters) {
-            MySqlCommand cmd = new MySqlCommand {
+        private MySqlCommand CreateCommand(MySqlConnection conn, string query, MySqlParameter[] parameters)
+        {
+            MySqlCommand cmd = new MySqlCommand
+            {
                 CommandText = query,
                 Transaction = _transaction,
                 Connection = conn
@@ -209,14 +254,9 @@ namespace CashFlowManager.Data
             return cmd;
         }
 
-        private static void OpenConnection(IDbConnection conn) {
+        private static void OpenConnection(IDbConnection conn)
+        {
             conn.Open();
-        }
-
-        public void Dispose() {
-            // get rid of managed resources, call Dispose on member variables...
-            _transaction.Dispose();
-            _connection.Dispose();
         }
     }
 }
