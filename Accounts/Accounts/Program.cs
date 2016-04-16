@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using CashFlowManager.Data;
+using CashFlowManager.Forms.Main;
 using CashFlowManager.Forms.Summary;
 
 namespace CashFlowManager {
@@ -11,7 +13,7 @@ namespace CashFlowManager {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new NetWorth());
+            Application.Run(new MainScreen());
         }
     }
 }

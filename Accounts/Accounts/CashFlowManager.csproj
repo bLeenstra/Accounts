@@ -34,9 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HelperFunctions">
-      <HintPath>C:\Users\frost\Documents\Visual Studio 2015\Projects\HelperFunctions\HelperFunctions\bin\Release\HelperFunctions.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,11 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\tmp.cs" />
-    <Compile Include="Forms\MainScreen.cs">
+    <Compile Include="Data\Database.cs" />
+    <Compile Include="Enums\DatabaseNames.cs" />
+    <Compile Include="Exceptions\MySqlQueryException.cs" />
+    <Compile Include="Forms\Main\DatabaseConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainScreen.Designer.cs">
+    <Compile Include="Forms\Main\DatabaseConfig.Designer.cs">
+      <DependentUpon>DatabaseConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Main\MainScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\MainScreen.Designer.cs">
       <DependentUpon>MainScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Summary\NetWorth.cs">
@@ -66,9 +71,13 @@
       <DependentUpon>NetWorth.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\MainScreen.resx">
+    <EmbeddedResource Include="Forms\Main\DatabaseConfig.resx">
+      <DependentUpon>DatabaseConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main\MainScreen.resx">
       <DependentUpon>MainScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Summary\NetWorth.resx">
@@ -97,6 +106,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

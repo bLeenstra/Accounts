@@ -1,11 +1,12 @@
 using System;
 using System.Data;
-using System.Security;
+using System.Windows.Forms;
+using CashFlowManager.Enums;
+using CashFlowManager.Exceptions;
+using CashFlowManager.Helpers;
 using MySql.Data.MySqlClient;
-using ProjectW.Exceptions;
-using ProjectW.Helpers;
 
-namespace ProjectW.Classes
+namespace CashFlowManager.Data
 {
     public sealed class Database : IDisposable
     {
@@ -15,7 +16,6 @@ namespace ProjectW.Classes
         private static uint _port;
         private static string _username;
         private static string _password;
-        public static bool Configured;
 
         public Database() {
             //get connection
@@ -75,7 +75,6 @@ namespace ProjectW.Classes
                 _username = username;
                 _password = password;
             }
-            Configured = true;
             return true;
         }
 
@@ -94,7 +93,7 @@ namespace ProjectW.Classes
                 }
                 catch (MySqlException ex) {
                     TransactionRollback();
-                    throw new MySqlCommandError("Encountered an error executing this query", ex);
+                    throw new MySqlQueryException("Encountered an error running the query", ex);
                 }
             }
         }
@@ -119,7 +118,7 @@ namespace ProjectW.Classes
                 }
                 catch (MySqlException ex) {
                     TransactionRollback();
-                    throw new MySqlCommandError("Encountered an error executing this query", ex);
+                    throw new MySqlQueryException("Encountered an error running the query", ex);
                 }
             }
             return dt;
@@ -133,7 +132,7 @@ namespace ProjectW.Classes
                 }
                 catch( MySqlException ex ) {
                     TransactionRollback();
-                    throw new MySqlCommandError("Encountered an error executing this query", ex);
+                    throw new MySqlQueryException("Encountered an error running the query", ex);
                 }
             }
         }
@@ -146,7 +145,7 @@ namespace ProjectW.Classes
                 }
                 catch( MySqlException ex ) {
                     TransactionRollback();
-                    throw new MySqlCommandError("Encountered an error executing this query", ex);
+                    throw new MySqlQueryException("Encountered an error running the query", ex);
                 }
             }
         }
@@ -158,7 +157,7 @@ namespace ProjectW.Classes
                 }
                 catch( MySqlException ex ) {
                     TransactionRollback();
-                    throw new MySqlCommandError("Encountered an error executing this query", ex);
+                    throw new MySqlQueryException("Encountered an error running the query", ex);
                 }
             }
         }
@@ -188,7 +187,6 @@ namespace ProjectW.Classes
         }
 
         private void TransactionRollback() {
-            MySqlConnection conn = _transaction.Connection;
             _transaction.Rollback();
         }
 
@@ -211,14 +209,8 @@ namespace ProjectW.Classes
             return cmd;
         }
 
-        private static IDbConnection OpenConnection(IDbConnection conn) {
-            try {
-                conn.Open();
-            }
-            catch (MySqlException ex) {
-                throw new MySqlConnectionError("Failed to open a connection to the database.", ex);
-            }
-            return conn;
+        private static void OpenConnection(IDbConnection conn) {
+            conn.Open();
         }
 
         public void Dispose() {
