@@ -199,7 +199,7 @@ namespace CashFlowManager.Data
         }
 
         /// <summary>
-        ///     Executes a query inside a MySqlTransaction object and returns meta infomation about the query
+        ///     Executes a query inside a MySqlTransaction object and returns meta information about the query
         /// </summary>
         /// <param name="query">The Query you wish to execute</param>
         /// <param name="parameters">The MySqlParameter you wish to attach to the query</param>
